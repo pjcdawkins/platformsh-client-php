@@ -7,7 +7,7 @@ use GuzzleHttp\ClientInterface;
 /**
  * A class wrapping multiple resources.
  */
-class Collection extends Resource implements \Iterator
+class Collection extends Resource implements \Iterator, \Countable
 {
     protected $resourceClass;
 
@@ -64,6 +64,14 @@ class Collection extends Resource implements \Iterator
         $className = $this->resourceClass;
 
         return new $className($data, $this->baseUrl, $this->client);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        return count($this->data);
     }
 
     /**

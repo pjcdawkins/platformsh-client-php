@@ -7,6 +7,7 @@ use Platformsh\Client\Connection\Connector;
 use Platformsh\Client\Connection\ConnectorInterface;
 use Platformsh\Client\Exception\ApiResponseException;
 use Platformsh\Client\Model\Collection;
+use Platformsh\Client\Model\HalCollection;
 use Platformsh\Client\Model\Project;
 use Platformsh\Client\Model\Result;
 use Platformsh\Client\Model\SshKey;
@@ -208,11 +209,12 @@ class PlatformClient
     /**
      * Get a list of your Platform.sh subscriptions.
      *
-     * @return Subscription[]
+     * @return HalCollection
      */
     public function getSubscriptions()
     {
         $url = $this->accountsEndpoint . 'subscriptions';
+
         return Subscription::getCollection($url, 0, [], $this->connector->getClient());
     }
 

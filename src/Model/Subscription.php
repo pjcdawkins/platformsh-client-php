@@ -143,20 +143,18 @@ class Subscription extends Resource
 
     /**
      * @inheritdoc
+     *
+     * @return HalCollection
      */
-    protected function setData(array $data)
+    public static function getCollection($url, $limit = 0, array $options = [], ClientInterface $client)
     {
-        $data = isset($data['subscriptions'][0]) ? $data['subscriptions'][0] : $data;
-        $this->data = $data;
-    }
+        if ($limit) {
+            $options['query']['limit'] = $limit;
+        }
+        $request = $client->createRequest('get', $url, $options);
+        $data = self::send($request, $client);
 
-    /**
-     * @inheritdoc
-     */
-    public static function wrapCollection(array $data, $baseUrl, ClientInterface $client)
-    {
-        $data = isset($data['subscriptions']) ? $data['subscriptions'] : [];
-        return parent::wrapCollection($data, $baseUrl, $client);
+        return new HalCollection($data, $url, $client, get_called_class());
     }
 
     /**
