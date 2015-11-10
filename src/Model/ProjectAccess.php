@@ -81,7 +81,7 @@ class ProjectAccess extends Resource
      *
      * @param int $limit
      *
-     * @return SshKey_Platform[]
+     * @return Collection
      */
     public function getSshKeys($limit = 0)
     {

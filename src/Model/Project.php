@@ -65,7 +65,7 @@ class Project extends Resource
     /**
      * Get the users associated with a project.
      *
-     * @return ProjectAccess[]
+     * @return Collection
      */
     public function getUsers()
     {
@@ -127,7 +127,7 @@ class Project extends Resource
      *
      * @param int $limit
      *
-     * @return Environment[]
+     * @return Collection
      */
     public function getEnvironments($limit = 0)
     {
@@ -139,7 +139,7 @@ class Project extends Resource
      *
      * @param int $limit
      *
-     * @return Domain[]
+     * @return Collection
      */
     public function getDomains($limit = 0)
     {
@@ -181,7 +181,7 @@ class Project extends Resource
      *
      * @param int $limit
      *
-     * @return Integration[]
+     * @return Collection
      */
     public function getIntegrations($limit = 0)
     {

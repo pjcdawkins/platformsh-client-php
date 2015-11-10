@@ -242,7 +242,7 @@ class Environment extends Resource
      * @param int $startsAt
      *   A UNIX timestamp for the maximum created date of activities to return.
      *
-     * @return Activity[]
+     * @return Collection
      */
     public function getActivities($limit = 0, $type = null, $startsAt = null)
     {
@@ -262,7 +262,7 @@ class Environment extends Resource
      *
      * @param int $limit
      *
-     * @return Variable[]
+     * @return Collection
      */
     public function getVariables($limit = 0)
     {
@@ -311,7 +311,7 @@ class Environment extends Resource
      *
      * @see self::getRouteUrls()
      *
-     * @return Route[]
+     * @return Collection
      */
     public function getRoutes()
     {
@@ -373,7 +373,7 @@ class Environment extends Resource
     /**
      * Get the users with access to this environment.
      *
-     * @return EnvironmentAccess[]
+     * @return Collection
      */
     public function getUsers()
     {

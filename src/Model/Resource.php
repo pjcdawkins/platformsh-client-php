@@ -261,7 +261,7 @@ abstract class Resource implements \ArrayAccess
      * @param array           $options
      * @param ClientInterface $client
      *
-     * @return static[]
+     * @return Collection
      */
     public static function getCollection($url, $limit = 0, array $options = [], ClientInterface $client)
     {
@@ -277,26 +277,7 @@ abstract class Resource implements \ArrayAccess
             $data = array_slice($data, 0, $limit);
         }
 
-        return static::wrapCollection($data, $url, $client);
-    }
-
-    /**
-     * Create an array of resource instances from a collection's JSON data.
-     *
-     * @param array           $data
-     * @param string          $baseUrl
-     * @param ClientInterface $client
-     *
-     * @return static[]
-     */
-    public static function wrapCollection(array $data, $baseUrl, ClientInterface $client)
-    {
-        $resources = [];
-        foreach ($data as $item) {
-            $resources[] = new static($item, $baseUrl, $client);
-        }
-
-        return $resources;
+        return new Collection($data, $url, $client, get_called_class());
     }
 
     /**

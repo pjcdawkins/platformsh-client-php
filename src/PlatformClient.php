@@ -6,6 +6,7 @@ use GuzzleHttp\Exception\BadResponseException;
 use Platformsh\Client\Connection\Connector;
 use Platformsh\Client\Connection\ConnectorInterface;
 use Platformsh\Client\Exception\ApiResponseException;
+use Platformsh\Client\Model\Collection;
 use Platformsh\Client\Model\Project;
 use Platformsh\Client\Model\Result;
 use Platformsh\Client\Model\SshKey;
@@ -69,6 +70,7 @@ class PlatformClient
     {
         $data = $this->getAccountInfo($reset);
         $client = $this->connector->getClient();
+
         $projects = [];
         foreach ($data['projects'] as $project) {
             // Each project has its own endpoint on a Platform.sh region.
