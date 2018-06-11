@@ -45,18 +45,6 @@ class ApiResponseException extends BadResponseException
      */
     public static function getErrorDetails(ResponseInterface $response)
     {
-        $responseInfoProperties = [
-            // Platform.sh API errors.
-            'message',
-            'detail',
-            // RESTful module errors.
-            'title',
-            'type',
-            // OAuth2 errors.
-            'error',
-            'error_description',
-        ];
-
         $details = '';
 
         $response->getBody()->seek(0);
@@ -64,11 +52,14 @@ class ApiResponseException extends BadResponseException
 
         try {
             $json = \GuzzleHttp\json_decode($contents, true);
-            foreach ($responseInfoProperties as $property) {
-                if (!empty($json[$property])) {
-                    $value = $json[$property];
-                    $details .= " [$property] " . (is_scalar($value) ? $value : json_encode($value));
+            if (!is_array($json)) {
+                throw new \InvalidArgumentException('Non-array JSON response');
+            }
+            foreach ($json as $property => $value) {
+                if ($property === 0 && count($json) === 1) {
+                    $property = 'message';
                 }
+                $details .= " [$property] " . (is_scalar($value) ? $value : json_encode($value));
             }
         } catch (\InvalidArgumentException $parseException) {
             // Occasionally the response body may not be JSON.
