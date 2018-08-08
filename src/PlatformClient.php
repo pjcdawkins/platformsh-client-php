@@ -6,6 +6,8 @@ use GuzzleHttp\Exception\BadResponseException;
 use Platformsh\Client\Connection\Connector;
 use Platformsh\Client\Connection\ConnectorInterface;
 use Platformsh\Client\Exception\ApiResponseException;
+use Platformsh\Client\Model\Account;
+use Platformsh\Client\Model\PlanRecord;
 use Platformsh\Client\Model\Project;
 use Platformsh\Client\Model\Region;
 use Platformsh\Client\Model\Result;
@@ -332,4 +334,23 @@ class PlatformClient
     {
         return Region::getCollection($this->accountsEndpoint . 'regions', 0, [], $this->getConnector()->getClient());
     }
+
+  /**
+   * Get plan records.
+   *
+   * @param array $query A key/value array of query parameters.
+   *
+   * @return PlanRecord[]
+   */
+  public function getPlanRecords(array $query = [])
+  {
+    $url = $this->accountsEndpoint . 'records/plan';
+    $options = [];
+
+    if ($query) {
+      $options['query'] = $query;
+    }
+
+    return PlanRecord::getCollection($url, 0, $options, $this->connector->getClient());
+  }
 }
